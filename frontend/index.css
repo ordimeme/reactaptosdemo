@@ -6,7 +6,7 @@
   :root {
     --background: #FFFFFF;
     --textColor: #23272F;
-    --softBg: #F6F7F9;
+    --softBg: #E8EDF3;
     --softTextColor: #404756;
     --buttonBg: #149ECA;
     --buttonHover: #117FA3;
@@ -15,9 +15,9 @@
   }
   
   [theme='dark'] {
-    --background: #23272F;
+    --background: #0A0B0D;
     --textColor: #F6F7F9;
-    --softBg: #343A46;
+    --softBg: #1B1E23;
     --softTextColor: #A3A3A3;
     --buttonBg: #149ECA;
     --buttonHover: #117FA3;
@@ -56,4 +56,23 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+:root[theme="light"] {
+  --bg: #fff;
+  --textColor: #000;
+  --softBg: #E8EDF3;
+  --softTextColor: #626262;
+}
+
+:root[theme="dark"] {
+  --bg: #0A0B0D;
+  --textColor: #F6F7F9;
+  --softBg: #1B1E23;
+  --softTextColor: #A3A3A3;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--textColor);
 }

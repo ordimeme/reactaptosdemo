@@ -81,12 +81,18 @@ export function MessageBoard() {
       <h4 className="text-lg font-medium text-[var(--textColor)]">Message content: {messageContent}</h4>
       <div className="text-[var(--textColor)]">New message</div>
       <Input 
+        id="message-input"
+        name="message"
         disabled={!client} 
         placeholder="Enter your message here..." 
         onChange={(e) => setNewMessageContent(e.target.value)} 
         className="bg-[var(--background)] text-[var(--textColor)] border-[var(--softBg)] placeholder:text-[var(--softTextColor)]"
+        autoComplete="off"
       />
       <Button
+        id="submit-message"
+        name="submit"
+        type="submit"
         disabled={!client || !newMessageContent || newMessageContent.length === 0 || newMessageContent.length > 100}
         onClick={onClickButton}
         className="bg-[var(--buttonBg)] text-[var(--buttonText)] hover:bg-[var(--buttonHover)]"

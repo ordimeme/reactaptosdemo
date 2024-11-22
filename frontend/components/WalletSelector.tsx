@@ -11,7 +11,7 @@ import {
   truncateAddress,
   useWallet,
 } from "@aptos-labs/wallet-adapter-react";
-import { ArrowLeft, ArrowRight, ChevronDown, Copy, LogOut, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Copy, LogOut, User, WalletMinimal} from "lucide-react";
 import { useCallback, useState } from "react";
 // Internal components
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,7 @@ export function WalletSelector() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="bg-[var(--buttonBg)] text-[var(--buttonText)] hover:bg-[var(--buttonHover)]">
-          {account?.ansName || truncateAddress(account?.address) || "Unknown"}
+        <WalletMinimal />{account?.ansName || truncateAddress(account?.address) || "Unknown"}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-[var(--background)] text-[var(--textColor)] border-[var(--softBg)]">
@@ -79,7 +79,7 @@ export function WalletSelector() {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button className="bg-[var(--buttonBg)] text-[var(--buttonText)] hover:bg-[var(--buttonHover)]">
-          Connect a Wallet
+        <WalletMinimal />CONNECT WALLET
         </Button>
       </DialogTrigger>
       <DialogContent 
@@ -111,11 +111,11 @@ function ConnectWalletDialogContent({ close }: ConnectWalletDialogProps) {
         <DialogTitle id="wallet-dialog-title" className="flex flex-col text-center leading-snug">
           {hasAptosConnectWallets ? (
             <>
-              <span>Log in or sign up</span>
-              <span>with Social + Aptos Connect</span>
+              <span>[WELLCOME TO REACTAPTOS]</span>
+              <span>with Google + Aptos Connect</span>
             </>
           ) : (
-            "Connect Wallet"
+            "CONNECT WALLET"
           )}
         </DialogTitle>
       </DialogHeader>

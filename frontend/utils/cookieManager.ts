@@ -12,7 +12,7 @@ const defaultOptions: CookieOptions = {
   sameSite: 'Lax',
   secure: true,
   path: '/',
-  partitioned: false
+  partitioned: true
 };
 
 export const setCookie = (name: string, value: string, options: CookieOptions = {}) => {
@@ -80,26 +80,94 @@ export const checkThirdPartyCookieSupport = async () => {
   }
 };
 
-// 处理特定域名的 cookie
-export const handleAptosLabsCookies = () => {
+// 处理 Aptos Labs 相关的 Cookie
+const handleAptosLabsCookies = () => {
   const domains = [
-    'api.testnet.aptoslabs.com',
-    'api.mainnet.aptoslabs.com',
-    'fullnode.testnet.aptoslabs.com',
-    'fullnode.mainnet.aptoslabs.com',
-    'api.devnet.aptoslabs.com',
-    'fullnode.devnet.aptoslabs.com'
+    { domain: 'api.testnet.aptoslabs.com', path: '/' },
+    { domain: 'api.mainnet.aptoslabs.com', path: '/' },
+    { domain: 'fullnode.testnet.aptoslabs.com', path: '/' },
+    { domain: 'fullnode.mainnet.aptoslabs.com', path: '/' },
+    { domain: 'api.devnet.aptoslabs.com', path: '/' },
+    { domain: 'fullnode.devnet.aptoslabs.com', path: '/' }
   ];
 
-  domains.forEach(domain => {
+  domains.forEach(({ domain, path }) => {
     setCookie('GCLB', '', {
       domain,
+      path,
       sameSite: 'Lax',
       secure: true,
-      path: '/',
       partitioned: true
     });
   });
+};
+
+// 处理 Google Analytics Cookie
+const handleGACookies = () => {
+  setCookie('ar_debug', '', {
+    domain: '.www.google-analytics.com',
+    path: '/',
+    sameSite: 'Lax',
+    secure: true,
+    partitioned: true
+  });
+
+  setCookie('_hjSessionUser_3271013', '', {
+    domain: '.aptoslabs.com',
+    path: '/',
+    sameSite: 'Lax',
+    secure: true,
+    partitioned: true
+  });
+};
+
+// 初始化所有 Cookie
+export const initializeCookieManagement = async () => {
+  try {
+    // 检查 Cookie 支持
+    const cookieSupport = await checkThirdPartyCookieSupport();
+    
+    if (cookieSupport) {
+      handleAptosLabsCookies();
+      handleGACookies();
+    } else {
+      // 使用 localStorage 作为备选
+      return createLocalStorageFallback();
+    }
+  } catch (error) {
+    console.warn('Cookie initialization failed:', error);
+    return createLocalStorageFallback();
+  }
+};
+
+// 创建 localStorage 备选方案
+const createLocalStorageFallback = () => {
+  console.warn('Using localStorage as cookie fallback');
+  return {
+    setItem: (key: string, value: string) => {
+      try {
+        localStorage.setItem(`cookie_fallback_${key}`, value);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    getItem: (key: string) => {
+      try {
+        return localStorage.getItem(`cookie_fallback_${key}`);
+      } catch {
+        return null;
+      }
+    },
+    removeItem: (key: string) => {
+      try {
+        localStorage.removeItem(`cookie_fallback_${key}`);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+  };
 };
 
 // 清理所有相关的 cookie
@@ -113,44 +181,4 @@ export const cleanupCookies = () => {
   cookiesToClean.forEach(cookieName => {
     removeCookie(cookieName);
   });
-};
-
-// 初始化 cookie 管理
-export const initializeCookieManagement = async () => {
-  const cookieSupport = await checkThirdPartyCookieSupport();
-  
-  if (cookieSupport) {
-    handleAptosLabsCookies();
-  } else {
-    // 使用 localStorage 作为备选方案
-    const fallbackStorage = {
-      setItem: (key: string, value: string) => {
-        try {
-          localStorage.setItem(`cookie_fallback_${key}`, value);
-          return true;
-        } catch {
-          return false;
-        }
-      },
-      getItem: (key: string) => {
-        try {
-          return localStorage.getItem(`cookie_fallback_${key}`);
-        } catch {
-          return null;
-        }
-      },
-      removeItem: (key: string) => {
-        try {
-          localStorage.removeItem(`cookie_fallback_${key}`);
-          return true;
-        } catch {
-          return false;
-        }
-      }
-    };
-
-    // 使用备选存储方案
-    console.warn('Using localStorage as cookie fallback');
-    return fallbackStorage;
-  }
 }; 

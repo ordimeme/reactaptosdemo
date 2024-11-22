@@ -1,6 +1,6 @@
-import ThemeToggle from './ThemeToggle'
 import { Link } from 'react-router-dom'
 import { AlignRight, X } from 'lucide-react';
+import { WalletSelector } from './WalletSelector';
 
 interface NavMobileProps {
   isOpen: boolean;
@@ -30,9 +30,12 @@ const links = [
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-[var(--background)]">
           <div className="flex flex-col items-center pt-20 space-y-8">
-            <div onClick={toggleMenu} className="p-2 rounded-full hover:bg-[var(--softBg)] transition-colors"> 
-            <X size={30} />
-            </div>
+            <button
+            onClick={toggleMenu}
+            className="absolute top-8 right-4 p-2 rounded-lg hover:bg-[var(--softBg)] transition-colors"
+          >
+            <X size={24} />
+            </button>
             {links.map((link, index) => (
             <Link
             key={index}
@@ -43,7 +46,8 @@ const links = [
             <p className='text-[var(--textColor)] text-xl'>{link.label}</p>
             </Link>
       ))}
-            <ThemeToggle />
+
+            <WalletSelector />
           </div>
         </div>
       )}
