@@ -14,13 +14,6 @@ export const initializeGA = () => {
     try {
       // 创建 Trusted Types 策略
       if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        // 创建一个通用策略，允许所有本地资源
-        const defaultPolicy = window.trustedTypes.createPolicy('default', {
-          createScriptURL: (url: string) => url,
-          createScript: (script: string) => script,
-          createHTML: (html: string) => html
-        });
-
         // 创建 GA 专用策略
         const gaPolicy = window.trustedTypes.createPolicy('ga-policy', {
           createScriptURL: (url: string) => {
@@ -44,6 +37,15 @@ export const initializeGA = () => {
           createScript: (script: string) => {
             // 允许所有脚本内容
             return script;
+          },
+          createHTML: (html: string) => {
+            // 基本的 HTML 净化
+            return html
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#039;');
           }
         });
 
