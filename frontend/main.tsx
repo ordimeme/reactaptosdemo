@@ -1,21 +1,21 @@
-import "./index.css";
-
+import "@/styles/globals.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
-import Markets from './pages/marketsPage.tsx'
-import CreateToken from './pages/createPage.tsx'
-import StakeToken from './pages/stakePage.tsx'
-import NotFound from './pages/404Page.tsx'
-import LpAssets from './pages/lpAssetsPage.tsx'
-import DashBoard from "./pages/dashBoardPage.tsx";
+import Markets from '@/pages/MarketsPage.tsx'
+import StakeToken from '@/pages/StakePage.tsx'
+import NotFound from '@/pages/404Page.tsx'
+import LpAssets from '@/pages/LpAssetsPage.tsx'
+import DashBoard from "@/pages/DashBoardPage.tsx";
 import { 
   Route,
   createRoutesFromElements,
   createBrowserRouter,
   RouterProvider,
+  Navigate,
 } from 'react-router-dom'
+
 import { Toaster } from "@/components/ui/toaster.tsx";
 import { WalletProvider } from "@/components/WalletProvider.tsx";
 import { WrongNetworkAlert } from "@/components/WrongNetworkAlert";
@@ -47,9 +47,8 @@ if (typeof window !== 'undefined') {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />}>
-      <Route index element={<Markets />} />
+      <Route index element={<Navigate to="/markets" replace />} />
       <Route path="/markets" element={<Markets />} />
-      <Route path="/create" element={<CreateToken />} />
       <Route path="/lpassets" element={<LpAssets />} />
       <Route path="/stake" element={<StakeToken />} />
       <Route path="/profile" element={<DashBoard />} />

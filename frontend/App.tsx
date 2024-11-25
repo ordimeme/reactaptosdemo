@@ -6,13 +6,11 @@ import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--background)]">
-      <div className="container mx-auto px-4">
-        <Header />
-        <main className="flex-grow">
-          <Outlet />
-        </main>
-      </div>
+    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--textColor)]">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 py-6">
+        <Outlet />
+      </main>
       <Footer />
       <WrongNetworkAlert />
       <Toaster />

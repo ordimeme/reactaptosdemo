@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 const Nav = () => {
   const links = [
     { to: '/markets', label: 'Markets' },
-    { to: '/create', label: 'Create' },
     { to: '/lpassets', label: 'LP Assets' },
     { to: '/stake', label: 'Stake' },
     { to: '/profile', label: 'profile' },

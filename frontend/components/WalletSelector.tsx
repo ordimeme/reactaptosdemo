@@ -78,7 +78,7 @@ export function WalletSelector() {
   ) : (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[var(--buttonBg)] text-[var(--buttonText)] hover:bg-[var(--buttonHover)]">
+        <Button className="bg-[var(--buttonBg)] text-[var(--buttonText)] hover:bg-[var(--buttonHover)] rounded-[5px]">
         <WalletMinimal />CONNECT WALLET
         </Button>
       </DialogTrigger>

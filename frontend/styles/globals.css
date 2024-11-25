@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --textColor: #121219;
+    --softBg: #E8EDF3;
+    --softTextColor: #404756;
+    --buttonBg: #121219;
+    --buttonText: #FFFFFF;
+    --buttonHover: #2D2D3D;
+    --buttonBorder: #121219;
+  }
+  
+  [theme='dark'] {
+    --background: #121219;
+    --textColor: #F6F7F9;
+    --softBg: #1B1E23;
+    --softTextColor: #A3A3A3;
+    --buttonBg: #FFFFFF;
+    --buttonText: #121219;
+    --buttonHover: #E5E5E5;
+    --buttonBorder: #FFFFFF;
+  }
+}
+
+.wallet-button {
+  background-color: var(--buttonBg) !important;
+  color: var(--buttonText) !important;
+  border: 1px solid var(--buttonBorder) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.wallet-button:hover {
+  background-color: var(--buttonHover) !important;
+  transform: translateY(-1px);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--textColor);
+  background-color: var(--background);
+  font-family: var(--fontFamily);
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}

@@ -27,16 +27,20 @@ export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) =>
 
   useEffect(() => {
     const initTheme = () => {
+      // 先尝试从 localStorage 获取
       const savedTheme = localStorage.getItem('theme') as Theme;
       if (savedTheme) {
         setTheme(savedTheme);
         document.documentElement.setAttribute('theme', savedTheme);
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = prefersDark ? 'dark' : 'light';
-        setTheme(initialTheme);
-        document.documentElement.setAttribute('theme', initialTheme);
+        return;
       }
+
+      // 如果没有保存的主题，则使用系统偏好
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = prefersDark ? 'dark' : 'light';
+      setTheme(initialTheme);
+      document.documentElement.setAttribute('theme', initialTheme);
+      localStorage.setItem('theme', initialTheme);
     };
 
     initTheme();
@@ -51,6 +55,7 @@ export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) =>
     });
   };
 
+  // 等待主题初始化完成
   if (theme === null) {
     return null;
   }

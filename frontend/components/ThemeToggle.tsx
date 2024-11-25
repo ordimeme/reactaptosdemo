@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ThemeContext } from '../context/themeContext'
+import { ThemeContext } from '@/context/themeContext'
 
 // 自定义太阳图标
 const SunIcon = () => (
@@ -44,10 +44,11 @@ const ThemeToggle = () => {
 
   return (
     <button 
-      className="p-2 rounded-full transition-colors duration-300 ease-in-out hover:bg-[var(--softBg)] text-[var(--textColor)]" 
+      className="p-2 rounded-full transition-colors duration-300 ease-in-out hover:bg-[var(--softBg)]"
+      style={{ color: 'var(--textColor)' }}
       onClick={toggle}
     >
-      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      {theme === 'dark' ? <MoonIcon /> : <SunIcon /> }
     </button>
   )
 }
